@@ -1,0 +1,31 @@
+
+footer{
+    display: block;
+    flex-shrink: 0;
+    background-color:rgb(28, 28, 32);
+    padding: 20px;
+    text-align: center;
+}
+
+footer .pagi-wrapper .pagi-list li{
+    display: inline-block;
+    list-style: none;
+}
+
+footer .pagi-wrapper .pagi-list li a {
+    text-decoration: none;
+    color: white;
+    border: 1px solid gray;
+    padding:7px;
+    
+}
+
+
+.pagi-list .active{
+    background-color:black;
+    
+}
+
+.pagi-list li a:hover:not(.active){
+    background-color: black;
+}

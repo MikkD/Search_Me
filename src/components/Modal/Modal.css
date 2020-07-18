@@ -1,0 +1,112 @@
+.modal-big{
+    display: none;
+    /* display: block; */
+    /* position: fixed; */
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color:rgb(0, 0, 0,0.4);
+    top:0;
+    left:0;
+    margin:0 auto;
+    overflow: auto;
+    position: absolute;
+    
+}
+
+.modal-container{
+    width: 80%;
+    background-color:#101010;
+    color: whitesmoke;
+    margin: 10% auto;
+    border-radius: 3px;
+    
+}
+
+.modal-header{
+    border-radius: 3px;
+    width: 100%;
+    background-color:rgb(45, 45, 45);
+    position: relative;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f1f1f1;
+    
+}
+
+.modal-header p {
+    font-size: 1.5em;
+} 
+
+.modal-header .close-modal-button{
+width: 24px;
+height: 24px;
+border: none;
+background-color: transparent;
+cursor: pointer;
+}
+
+.modal-header .close-modal-button:focus {
+outline: none;
+}
+
+.modal-header .close-modal-button:hover >span {
+    color:#101010;
+    transition: ease-in-out 0.1s;
+}
+
+.modal-body{
+    padding: 20px;
+    display: flex;
+}
+
+.modal-image{
+    vertical-align: bottom;
+    flex-basis: 35%;
+
+}
+
+span{
+    color: white;
+}
+
+.modal-item{
+    padding: 0 10px;
+    flex-basis: 40%;
+}
+
+.modal-description{
+    color: #c7c7c7;
+    flex-basis: 60%;
+    padding: 0 10px;
+}
+
+.modal-description p{
+    margin-top: 10px;
+    color:#d8d8d8;
+}
+.details-button{
+    cursor: pointer;
+}
+
+.watchlist-button{
+    /* in case i remove border i need to use padding-left:0 */
+    /* padding-left: 0px; */
+    background-color: transparent;
+    color: #c7c7c7;
+    transition: ease-in 0.1s;
+    text-decoration: none;
+    /* border: none; */
+    outline: none;
+    border: 1px solid #d83027;
+}
+
+.watchlist-button:hover{
+    cursor: pointer;
+    /* background-color:#1d1d1d; */
+    color: white;
+
+}
+

@@ -1,0 +1,72 @@
+.watch-list-header{
+    display: flex;
+    padding: 25px 20px;
+    background-color:black;
+    font-size: 1.9em;
+    line-height: 1.5em;
+}
+.watch-list-header-close-button{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    
+}
+.watch-list-header-close-button:hover{
+    color:gray;
+    transition: ease-in 0.2s;
+}
+
+.watch-list-header-item{
+    flex-grow: 2;
+    /* text-align: center; */
+}
+
+/* Watch-list Filter */
+.watch-list-filter{
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 0.125rem solid #d83027;
+    font-size: 1.1rem;
+
+}
+.watch-list-filter>div>a{
+    display: block;
+    padding: 20px 40px;
+    position: relative;
+    
+}
+.watch-list-filter>div:not(:last-child)>a::after {
+    content: "↑";
+    position: absolute;
+    display: inline-block;
+    opacity: 0.25;
+    left:25px;
+    transition: opacity 250ms ease 0s;
+    color:rgb(182, 49, 49)
+}
+/* .watch-list-filter>div:not(:last-child)>a:hover::after{
+    opacity: 1;
+} */
+
+.watch-list-filter>div>:hover{
+    opacity: 1;
+}
+
+.flex-grow-big{
+flex-grow: 2;
+}
+
+.button{
+    color :whitesmoke;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+/* IS_FILTERED */
+.is-filtered{
+    border-bottom: 1px solid red;
+}

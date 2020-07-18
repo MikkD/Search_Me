@@ -1,0 +1,33 @@
+.flex-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgb(19, 19, 19);
+    font-size: 1.4em;
+}
+
+.watch-list-button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: whitesmoke;
+    position: relative;
+    cursor: pointer;
+}
+.nav-counter{
+    position: absolute;
+    padding: 0 4px;
+    top: 0;
+    right: 0px;
+    color:black;
+    background-color: #b7b5b7;
+    border-radius: 30%;
+    font-size: 10px;
+}
+
+
+
+.fa-icon{
+    padding-right:20px ;
+}
