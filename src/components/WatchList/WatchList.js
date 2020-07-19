@@ -9,89 +9,94 @@ export class WatchList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            toggle: [
-                {
-                    isOpen: false,
-                    id: 'anton-id'
-                },
-                {
-                    isOpen: false,
-                    id: 'nick-id'
-                },
-                {
-                    isOpen: false,
-                    id: 'body-id'
-                }
-            ],
         }
+        this.hiddenAccordionRef = React.createRef();
     }
 
     toggleAccordion = (event) => {
-        let clickedID = event.target.parentNode.parentNode.id;
-        let update = this.state.toggle.map(el => {
-            if (el.id === clickedID) {
-                el.isOpen = !el.isOpen
-            }
-            return el
-        })
-        this.setState({ toggle: update }, () => {
-            this.handleState(clickedID)
-        })
+        const theId = event.target.parentNode.parentNode.id;
+        // this.handleState(theId)
+        // console.log(this.hiddenAccordionRef.current)
     }
-    handleState = (clickedID) => {
-        let hiddenAccordion = document.querySelector(`#${clickedID}.hidden-accordion`);
-        let animateBlock = document.querySelector(`#${clickedID}.hidden-accordion`).childNodes[0];
-        this.state.toggle.map(el => {
-            if (el.isOpen && el.id === clickedID) {
-                hiddenAccordion.style.display = 'flex';
-                hiddenAccordion.style.maxHeight = hiddenAccordion.scrollHeight + "px";
-                animateBlock.style.animationName = 'accordion';
-            } else if (!el.isOpen && el.id === clickedID) {
-                hiddenAccordion.style.maxHeight = null;
-                animateBlock.style.animationName = 'accordion-fade-out';
-            }
-        })
-    }
+
+    // handleState = (clickedID) => {
+    //     const hiddenAccordion = document.querySelector(`#${clickedID}.hidden-accordion`);
+    //     console.log('hiddenAccordion', hiddenAccordion)
+    //     const animateBlock = document.querySelector(`#${clickedID}.hidden-accordion`).childNodes[0];
+    //     console.log('animateBlock', animateBlock)
+    //     this.props.watchListMovies.map(el => {
+    //         if (el.isOpen && el.id === clickedID) {
+    //             hiddenAccordion.style.display = 'flex';
+    //             hiddenAccordion.style.maxHeight = hiddenAccordion.scrollHeight + "px";
+    //             animateBlock.style.animationName = 'accordion';
+    //         } else if (!el.isOpen && el.id === clickedID) {
+    //             hiddenAccordion.style.maxHeight = null;
+    //             animateBlock.style.animationName = 'accordion-fade-out';
+    //         }
+    //     })
+    // }
 
 
     render() {
-        const { watchListIsOpen, dispatchToggleWatchList } = this.props
+        const { watchListIsOpen, dispatchToggleWatchList, watchListMovies } = this.props
         console.log('WatchList.js Trigerred')
         return (
             <React.Fragment >
                 <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
-                    {/* <div className={watchListState ? "watch-list-overlay" : "watch-list-overlay slide-in"}> */}
                     < div className="space-wrapper">
-                        <WatchListHeader watchListToggle={this.props.watchListToggle} />
+                        <WatchListHeader />
                         <div className="watch-list-body">
                             {/* Start accordion */}
-                            <a onClick={this.toggleAccordion} className="open-accordion" id="anton-id">
-                                <div className="watch-list-item-container">
-                                    <p className="flex-grow-big">Title</p>
-                                    <p>Year</p>
-                                    <p className="flex-grow-big">Director</p>
-                                    <p>Country</p>
-                                    <p>Genre</p>
-                                    <p className='plus-button'>+</p>
-                                </div>
-                            </a>
-                            <div className="hidden-accordion" id="anton-id">
-                                <div className="hidden-accordion-padding">
-                                    <div className="flex-accordion-img">
-                                        <img src={require('./poster.jpeg')}></img>
-                                    </div>
-                                    <div className="flex-accordion-body flex-grow-big">
-                                        <p><br />Synopsis:<br />lorem</p>
-                                        <p>Director:<br />lorem</p>
-                                        <p>Actors:<br />lorem</p>
-                                        <p>Genre:<br />lorem</p>
-                                        <p>Duration:<br />lorem</p>
-                                        <a className="off-watch-list-button">Remove from Watchlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* End Accordion */}
+                            {watchListMovies.map(movie => {
+                                return (
+                                    <React.Fragment>
+                                        <a onClick={(e) => this.toggleAccordion(e)} className="open-accordion" id={movie.imdbID}>
+                                            <div className="watch-list-item-container">
+                                                <p className="flex-grow-big">{movie.Title}</p>
+                                                <p>{movie.Year}</p>
+                                                <p className="flex-grow-big">{movie.Director}</p>
+                                                <p>{movie.Country}</p>
+                                                <p>{movie.Genre}</p>
+                                                <p className='plus-button'>+</p>
+                                            </div>
+                                        </a>
+                                        <div ref={this.hiddenAccordionRef} className="hidden-accordion" id={movie.imdbID}>
+                                            <div className="hidden-accordion-padding">
+                                                <div className="flex-accordion-img">
+                                                    <img src={require('./poster.jpeg')}></img>
+                                                </div>
+                                                <div className="flex-accordion-body flex-grow-big">
+                                                    <p><br />Synopsis:<br />{movie.Plot}</p>
+                                                    <p>Director:<br />{movie.Director}</p>
+                                                    <p>Actors:<br />{movie.Actors}</p>
+                                                    <p>Genre:<br />{movie.Genre}</p>
+                                                    <p>Duration:<br />{movie.Duration}</p>
+                                                    <a className="off-watch-list-button">Remove from Watchlist</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            })
+                            }
                         </div>
+
+                        {/* // <div className="hidden-accordion" id="anton-id">
+                                //     <div className="hidden-accordion-padding">
+                                //         <div className="flex-accordion-img">
+                                //             <img src={require('./poster.jpeg')}></img>
+                                //         </div>
+                                //         <div className="flex-accordion-body flex-grow-big">
+                                //             <p><br />Synopsis:<br />lorem</p>
+                                //             <p>Director:<br />lorem</p>
+                                //             <p>Actors:<br />lorem</p>
+                                //             <p>Genre:<br />lorem</p>
+                                //             <p>Duration:<br />lorem</p>
+                                //             <a className="off-watch-list-button">Remove from Watchlist</a>
+                                //         </div>
+                                //     </div>
+                                // </div> */}
+
                         <div className="watch-list-footer">
 
                         </div>

@@ -8,16 +8,12 @@ export class WatchListHeader extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            width: '600'
         }
     }
 
-    componentDidMount() {
-        window.addEventListener('resize', () => this.setState({ width: window.innerWidth }))
-    }
 
     render() {
-        console.log('WatchList.js Trigerred')
+        console.log('WatchListHeader.js Trigerred')
         return (
             <React.Fragment>
                 <div className="watch-list-header">
@@ -29,7 +25,7 @@ export class WatchListHeader extends React.Component {
                     </div>
                 </div>
                 <div className="watch-list-filter" >
-                    {this.state.width >= 600 ?
+                    {window.innerWidth >= 600 ?
                         (<React.Fragment>
                             < div className="title-filter flex-grow-big"><a className="button">Title</a></div>
                             <div className="release-date-filter"><a className="button">Year</a></div>

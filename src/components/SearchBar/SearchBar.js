@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './SearchBar.css'
 
-export class SearchBar extends Component {
+export class SearchBar extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
             search: ''
         }
     }
-
     render() {
         console.log('SearchBar.js Trigerred')
         return (

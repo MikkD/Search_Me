@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react';
 import './Movies.css';
-import Modal from '../Modal/Modal'
 
-export class Movies extends Component {
+export class Movies extends PureComponent {
+
     render() {
         console.log('Movies.js triggered')
         const { movies, errorHandler } = this.props;
@@ -30,17 +30,9 @@ export class Movies extends Component {
                                 </div>
                             )
                         }) : <h1 className="error-message">{errorHandler}</h1>}
-                        {/* <Modal
-                            watchListHandler={this.props.watchListHandler}
-                            modalHandler={() => this.setState({ modalVisible: !this.state.modalVisible })}
-                            modalVisible={this.state.modalVisible}
-                            movie={this.props.movie}
-                        /> */}
                     </div>
-
                 </div>
             </React.Fragment >
-
         )
     }
 }

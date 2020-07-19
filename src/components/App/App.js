@@ -23,61 +23,54 @@ export class App extends React.Component {
   }
 
 
-  fetchData = async (queryParam) => {
+  fetchData = async (queryParam,) => {
+    console.log('didApiCall')
     const identifier = queryParam.slice(0, 3)
     switch (identifier) {
       case '?s=':
-        let theMovies = await getDataUtil(queryParam);
+        const theMovies = await getDataUtil(queryParam);
         theMovies.Search ? this.setState({ movies: theMovies.Search }) : this.setState({ errorHandler: 'Movie not found!' })
         break;
       case '?i=':
         const theMovie = await getDataUtil(queryParam)
-        this.setState({ movie: theMovie });
+        this.setState({ movie: { ...theMovie, isAddedToWatchList: false } });
         break;
       default:
         console.error('MOVIE NOT FOUND')
     }
-    const bodyNode = this.bodyRef.current;
-    bodyNode.style.backgroundBlendMode = "multiply";
-    bodyNode.style.backdropFilter = "blur(2px)";
   }
 
-
-  watchListHandler = (movieObject) => {
-    let movieToAdd = movieObject;
+  watchListHandler = (newWatchListMovie) => {
     let currentWatchListMovies = [...this.state.watchListMovies];
-    let newWatchListMovie = {
-      watchListMovie: movieToAdd,
-      isAdded: true
-    }
-    // Checked if array is not empty
-    if (!currentWatchListMovies.length) {
-      currentWatchListMovies = [...this.state.watchListMovies, newWatchListMovie]
-      this.setState({ watchListMovies: currentWatchListMovies })
-
+    let dublicate = currentWatchListMovies.find(el => el.imdbID === newWatchListMovie.imdbID)
+    console.log('dublicate', dublicate)
+    if (!dublicate) {
+      this.setState({
+        watchListMovies: [...this.state.watchListMovies, newWatchListMovie],
+        movie: { ...newWatchListMovie, isAddedToWatchList: true }
+      })
     } else {
-      // Added if no dublicate is present
-      let dublicate = currentWatchListMovies.find(el => el.watchListMovie.imdbID === movieToAdd.imdbID)
-      if (!dublicate) {
-        this.setState({ watchListMovies: [...this.state.watchListMovies, newWatchListMovie] })
-      } else {
-        // Spliced if dublicate is present
-        currentWatchListMovies.splice(currentWatchListMovies.indexOf(dublicate), 1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-      }
-
+      currentWatchListMovies.splice(currentWatchListMovies.indexOf(dublicate), 1)
+      this.setState({
+        watchListMovies: currentWatchListMovies,
+        movie: { ...newWatchListMovie, isAddedToWatchList: false }
+      })
     }
   }
+
   modalIsOpen = () => this.setState({ modalVisible: !this.state.modalVisible })
 
   render() {
     return (
       <React.Fragment>
-        <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }} className="App" ref={this.bodyRef} >
+        <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }}
+          className="App"
+          ref={this.bodyRef} >
           <WatchList
-            watchListToggle={this.watchListToggle}
-            watchListState={this.state.watchList} />
-          <NavBar />
+            watchListMovies={this.state.watchListMovies}
+          />
+          <NavBar
+            watchListMoviesNumber={this.state.watchListMovies.length} />
           <SearchBar
             fetchData={this.fetchData}
             getMovies={this.getMovies} />
@@ -86,21 +79,12 @@ export class App extends React.Component {
             fetchData={this.fetchData}
             getMovie={this.getMovie}
             movies={this.state.movies}
-            movie={this.state.movie}
-            watchListHandler={this.watchListHandler}
             modalIsOpen={this.modalIsOpen} />
-          <Pagination
-            pageNumber={this.state.pageNumber}
-            getMovies={this.getMovies}
-            currentMovies={this.state.movies} />
-          {/* <Modal /> */}
-
           <Modal
             watchListHandler={this.watchListHandler}
-            modalHandler={() => this.setState({ modalVisible: !this.state.modalVisible })}
+            modalIsOpen={this.modalIsOpen}
             modalVisible={this.state.modalVisible}
-            movie={this.state.movie}
-          />
+            movie={this.state.movie} /> :
 
         </div >
       </React.Fragment >
