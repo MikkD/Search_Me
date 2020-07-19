@@ -5,9 +5,25 @@ export class SearchBar extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            search: ''
+            searchValue: '',
+            prevSearchValue: ''
         }
     }
+
+    handleSubmit = (event) => {
+        event.preventDefault()
+        if (this.state.prevSearchValue !== this.state.searchValue && this.state.searchValue) {
+            this.props.fetchData(`?s=${this.state.searchValue}`)
+            this.setState({ prevSearchValue: this.state.searchValue })
+        }
+    }
+
+    handleChange = (event) => {
+        this.setState({ searchValue: event.target.value, prevSearchValue: this.state.searchValue })
+    }
+
+
+
     render() {
         console.log('SearchBar.js Trigerred')
         return (
@@ -15,15 +31,19 @@ export class SearchBar extends PureComponent {
                 <header>
                     <h1>IMDB Database</h1>
                     <div className="input-search-wrapper">
-                        <input
-                            onChange={(e) => this.setState({ search: e.target.value })}
-                            onKeyPress={(event) => event.key === 'Enter' ? this.props.fetchData(`?s=${this.state.search}`) : null}
-                            value={this.state.search}
-                            id="search-input"
-                            placeholder="Enter a movie" />
-                        <button
-                            onClick={() => this.state.search && this.props.fetchData(`?s=${this.state.search}`)}
-                            className="search-button"><span>🔍</span></button>
+                        <form className='input-form' onSubmit={this.handleSubmit}>
+                            <input
+                                type="text"
+                                onChange={(e) => this.handleChange(e)}
+                                value={this.state.search}
+                                id="search-input"
+                                placeholder="Enter a movie" />
+                            <button
+                                onClick={this.handleSubmit}
+                                className="search-button">
+                                <span>🔍</span>
+                            </button>
+                        </form>
                     </div>
                 </header>
             </React.Fragment >

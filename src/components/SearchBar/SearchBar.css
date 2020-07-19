@@ -16,6 +16,9 @@ header h1{
     position: relative;
     margin: 0 auto;
 }
+.input-form{
+    position: relative;
+}
 
 #search-input{
     width: 100%;
