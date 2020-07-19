@@ -70,3 +70,10 @@ flex-grow: 2;
 .is-filtered{
     border-bottom: 1px solid red;
 }
+
+
+/* @media only screen and (max-width: 600px) {
+    body {
+      background-color: lightblue;
+    }
+  } */

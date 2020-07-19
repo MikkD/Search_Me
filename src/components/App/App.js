@@ -5,6 +5,8 @@ import Movies from '../Movies/Movies';
 import Pagination from '../Pagination/Pagination';
 import NavBar from '../NavBar/NavBar';
 import WatchList from '../WatchList/WatchList';
+import { getDataUtil } from './utils';
+import Modal from '../Modal/Modal';
 
 export class App extends React.Component {
   constructor(props) {
@@ -13,53 +15,11 @@ export class App extends React.Component {
       movies: [],
       movie: {},
       pageNumber: 1,
-      watchList: false,
-      watchListMovies: []
+      watchListMovies: [],
+      errorHandler: '',
+      modalVisible: false
     }
-  }
-
-
-  // getMovies = (searchQuery, pageNum) => {
-  //   const basicUrl = 'http://www.omdbapi.com/'
-  //   const queryParam = `?s=${searchQuery}`
-  //   const numberOfPages = `&page=${pageNum > 1 ? pageNum : this.state.pageNumber}`
-  //   const apiKey = '&apikey=3755d9aa'
-  //   let endpoint = basicUrl + queryParam + numberOfPages + apiKey;
-  //   fetch(endpoint)
-  //     .then(res => res.json())
-  //     .then(parsedJSON => {
-  //       if (parsedJSON.Search) {
-  //         this.setState({ movies: parsedJSON.Search })
-  //       }
-  //     })
-  //     .catch(err => console.log('error is ', err))
-  //   let theBody = document.querySelector('body')
-  //   theBody.style.backgroundBlendMode = "multiply";
-  //   theBody.style.backdropFilter = "blur(1px)";
-  // }
-
-  // getMovie = (movieID) => {
-  //   const basicUrl = 'http://www.omdbapi.com/'
-  //   const queryParam = `?i=${movieID} `
-  //   const apiKey = '&apikey=3755d9aa'
-  //   let endpoint = basicUrl + queryParam + apiKey;
-  //   fetch(endpoint)
-  //     .then(res => res.json())
-  //     .then(parsedJSON => {
-  //       this.setState({ movie: parsedJSON })
-  //     })
-  //     .catch(err => console.log('error is ', err))
-  // }
-
-  getDataUtil = async queryParam => {
-    const basicUrl = 'http://www.omdbapi.com/'
-    const apiKey = '&apikey=3755d9aa'
-    const endpoint = basicUrl + queryParam + apiKey;
-    const fetchedData = await fetch(endpoint)
-      .then(res => res.json())
-      .then(parsedJSON => parsedJSON)
-      .catch(err => console.log('error is ', err))
-    return fetchedData
+    this.bodyRef = React.createRef()
   }
 
 
@@ -67,22 +27,21 @@ export class App extends React.Component {
     const identifier = queryParam.slice(0, 3)
     switch (identifier) {
       case '?s=':
-        let theMovies = await this.getDataUtil(queryParam);
-        this.setState({ movies: theMovies.Search });
+        let theMovies = await getDataUtil(queryParam);
+        theMovies.Search ? this.setState({ movies: theMovies.Search }) : this.setState({ errorHandler: 'Movie not found!' })
         break;
       case '?i=':
-        const theMovie = await this.getDataUtil(queryParam)
+        const theMovie = await getDataUtil(queryParam)
         this.setState({ movie: theMovie });
         break;
       default:
         console.error('MOVIE NOT FOUND')
     }
-    // let theBody = document.querySelector('body')
-    //   theBody.style.backgroundBlendMode = "multiply";
-    //   theBody.style.backdropFilter = "blur(1px)";
+    const bodyNode = this.bodyRef.current;
+    bodyNode.style.backgroundBlendMode = "multiply";
+    bodyNode.style.backdropFilter = "blur(2px)";
   }
 
-  watchListToggle = () => this.setState({ watchList: !this.state.watchList });
 
   watchListHandler = (movieObject) => {
     let movieToAdd = movieObject;
@@ -109,35 +68,42 @@ export class App extends React.Component {
 
     }
   }
-
-
+  modalIsOpen = () => this.setState({ modalVisible: !this.state.modalVisible })
 
   render() {
-    console.log('watch list movies is ', this.state.watchListMovies)
     return (
       <React.Fragment>
-        <div className="App">
+        <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }} className="App" ref={this.bodyRef} >
           <WatchList
             watchListToggle={this.watchListToggle}
             watchListState={this.state.watchList} />
-          <NavBar
-            watchListNumber={this.state.watchListCounter}
-            watchListToggle={this.watchListToggle} />
+          <NavBar />
           <SearchBar
             fetchData={this.fetchData}
             getMovies={this.getMovies} />
           <Movies
+            errorHandler={this.state.errorHandler}
             fetchData={this.fetchData}
             getMovie={this.getMovie}
             movies={this.state.movies}
             movie={this.state.movie}
-            watchListHandler={this.watchListHandler} />
+            watchListHandler={this.watchListHandler}
+            modalIsOpen={this.modalIsOpen} />
           <Pagination
             pageNumber={this.state.pageNumber}
             getMovies={this.getMovies}
             currentMovies={this.state.movies} />
+          {/* <Modal /> */}
+
+          <Modal
+            watchListHandler={this.watchListHandler}
+            modalHandler={() => this.setState({ modalVisible: !this.state.modalVisible })}
+            modalVisible={this.state.modalVisible}
+            movie={this.state.movie}
+          />
+
         </div >
-      </React.Fragment>
+      </React.Fragment >
     )
   }
 

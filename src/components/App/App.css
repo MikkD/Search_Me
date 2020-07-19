@@ -1,16 +1,14 @@
 
 body{
-    /* background-color:#18181E; */
     background-color: #292929;
-    /* font-family: 'Oswald',Helvetica,Arial,Lucida,sans-serif; */
     font-family: 'Oswald', sans-serif;
     background-image: url(./dataset-original.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    width: 100%;
+    height: 100%;
 }
-
-
 
 
 

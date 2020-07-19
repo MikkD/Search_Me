@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import './WatchListHeader.css'
+import React from 'react'
+import './WatchListHeader.css';
+import { connect } from 'react-redux';
+import { action_toggle_watch_list } from '../../redux/watchlist/watchlist.action';
 
 
-export class WatchListHeader extends Component {
+export class WatchListHeader extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,8 +23,10 @@ export class WatchListHeader extends Component {
                 <div className="watch-list-header">
                     <div className="watch-list-header-item">Your WatchList</div>
                     <div
-                        onClick={() => this.props.watchListToggle()} className="watch-list-header-close-button">
-                        <i className="fa fa-times fa-xs" aria-hidden="true"></i></div>
+                        onClick={() => this.props.dispatchToggleWatchList()}
+                        className="watch-list-header-close-button">
+                        <i className="fa fa-times fa-xs" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div className="watch-list-filter" >
                     {this.state.width >= 600 ?
@@ -37,17 +41,22 @@ export class WatchListHeader extends Component {
                         </React.Fragment>)
                         :
                         (<React.Fragment>
-                            < div className="title-filter flex-grow-big"><a className="button">Category By:</a></div>
+                            < div className="title-filter flex-grow-big">
+                                <a className="button">Category By:</a>
+                            </div>
                         </React.Fragment>)
                     }
                 </div>
-
-
             </React.Fragment >
         )
     }
 }
 
-export default WatchListHeader
+const mapDispatchToProps = dispatch => ({
+    dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
+})
+
+export default connect(null, mapDispatchToProps)(WatchListHeader)
+
 
 

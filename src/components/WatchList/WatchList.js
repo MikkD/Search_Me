@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './WatchList.css'
 import WatchListHeader from './WatchListHeader/WatchListHeader';
+import { connect } from 'react-redux';
+import { action_toggle_watch_list } from '../redux/watchlist/watchlist.action';
+
 
 export class WatchList extends Component {
     constructor(props) {
@@ -20,13 +23,9 @@ export class WatchList extends Component {
                     id: 'body-id'
                 }
             ],
-            viewport: '670'
-
         }
     }
 
-    // LIKE IT BUT TOO BIG / LOGIC DOESN'T BREAK EVEN IF DOM CHANGES
-    // Change State
     toggleAccordion = (event) => {
         let clickedID = event.target.parentNode.parentNode.id;
         let update = this.state.toggle.map(el => {
@@ -39,7 +38,6 @@ export class WatchList extends Component {
             this.handleState(clickedID)
         })
     }
-    // Change UI Мы проверяем состояние тогла и меняем accordion соответстeнно 
     handleState = (clickedID) => {
         let hiddenAccordion = document.querySelector(`#${clickedID}.hidden-accordion`);
         let animateBlock = document.querySelector(`#${clickedID}.hidden-accordion`).childNodes[0];
@@ -56,18 +54,12 @@ export class WatchList extends Component {
     }
 
 
-    // Upadating and checking viewport
-
-    componentDidMount() {
-        window.addEventListener('resize', () => this.setState({ viewport: window.innerWidth }))
-    }
-
     render() {
+        const { watchListIsOpen, dispatchToggleWatchList } = this.props
         console.log('WatchList.js Trigerred')
-        const watchListState = this.props.watchListState;
         return (
             <React.Fragment >
-                <div className={watchListState ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
+                <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
                     {/* <div className={watchListState ? "watch-list-overlay" : "watch-list-overlay slide-in"}> */}
                     < div className="space-wrapper">
                         <WatchListHeader watchListToggle={this.props.watchListToggle} />
@@ -80,7 +72,7 @@ export class WatchList extends Component {
                                     <p className="flex-grow-big">Director</p>
                                     <p>Country</p>
                                     <p>Genre</p>
-                                    <p className={this.state.viewport >= 670 ? 'plus-button' : 'none'}>+</p>
+                                    <p className='plus-button'>+</p>
                                 </div>
                             </a>
                             <div className="hidden-accordion" id="anton-id">
@@ -110,5 +102,12 @@ export class WatchList extends Component {
         )
     }
 }
+const mapStateToProps = state => ({
+    watchListIsOpen: state.rootWatchListReducer.watchListOpen
+})
 
-export default WatchList
+const mapDispatchToProps = dispatch => ({
+    dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WatchList) 
