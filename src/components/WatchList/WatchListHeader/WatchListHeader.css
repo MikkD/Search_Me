@@ -18,11 +18,6 @@
     transition: ease-in 0.2s;
 }
 
-.watch-list-header-item{
-    flex-grow: 2;
-    /* text-align: center; */
-}
-
 /* Watch-list Filter */
 .watch-list-filter{
     display: flex;
@@ -42,21 +37,23 @@
     max-width: 17.5%;
 }
 .watch-list-filter>div>a{
-    display: block;
-    padding: 20px 15px;
+    display: inline-block;
+    padding: 20px 5px 20px 20px;
     position: relative;
 }
-.watch-list-filter>div:not(:last-child)>a::after {
-    content: "↑";
-    position: absolute;
+.arrow-filter{
+    opacity: 0.7;
+    color:rgb(182, 49, 49);
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
     display: inline-block;
-    opacity: 0.25;
-    left:25px;
-    transition: opacity 250ms ease 0s;
-    color:rgb(182, 49, 49)
+}
+.down{
+    transform: rotate(-180deg);
+    vertical-align: middle;
 }
 
-.watch-list-filter>div>:hover{
+.watch-list-filter>div a:hover+.arrow-filter{
     opacity: 1;
 }
 .button{
@@ -79,14 +76,17 @@ select{
     color:white;
     border: none;
     outline: none;
-
+}
+.dropdown-filter{
+display: none;
+padding: 5px 20px 5px;
+border-bottom: 2px solid #d83027;
 }
 
-@media only screen and (max-width: 600px) {
-    .visible{
+
+@media only screen and (max-width: 500px) {
+    .dropdown-filter{
         display: block;
-        padding: 5px 20px 5px;
-        border-bottom: 2px solid #d83027;
     }
     .invisible{
         display: none;

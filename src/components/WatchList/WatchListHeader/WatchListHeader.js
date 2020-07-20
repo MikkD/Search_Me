@@ -2,16 +2,24 @@ import React from 'react'
 import './WatchListHeader.css';
 import { connect } from 'react-redux';
 import { action_toggle_watch_list } from '../../redux/watchlist/watchlist.action';
+import { filterParameters } from './utils';
 
 
 export class WatchListHeader extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            filterOptions: ['Title', 'Year', 'Director', 'Country', 'Genre']
+            filterOptions: filterParameters
         }
     }
 
+    handleFilter = (filterParam) => {
+        this.props.filterWatchList(filterParam)
+        this.setState(prevState => ({
+            filterOptions: prevState.filterOptions.map(filterOption => filterOption.filterType === filterParam ?
+                { ...filterOption, isActive: true } : { ...filterOption, isActive: false })
+        }))
+    }
 
     render() {
         console.log('WatchListHeader.js Trigerred')
@@ -28,17 +36,25 @@ export class WatchListHeader extends React.Component {
                 <div className="watch-list-filter invisible" >
                     {this.state.filterOptions.map(filterBy => {
                         return (
-                            <div className={filterBy}>
-                                <a className="button">{filterBy}</a>
+                            <div className={filterBy.filterType}>
+                                <a
+                                    onClick={() => this.handleFilter(filterBy.filterType)}
+                                    className="button">{filterBy.filterType}
+                                </a>
+                                <span className={filterBy.isActive ? "arrow-filter down" : "arrow-filter"}>↑</span>
                             </div>
                         )
                     })}
                 </div>
-                < div className="title-filter  visible">
-
-                    <select id="filter-items">
+                <div className="dropdown-filter">
+                    <select
+                        onChange={(e) => this.props.filterWatchList(e.target.value)}
+                        id="filter-items">
                         <option>Category By:</option>
-                        {this.state.filterOptions.map(filterType => <option value={filterType}>{filterType}</option>)}
+                        {this.state.filterOptions.map(filterType =>
+                            <option onChange={() => this.handleFilter(filterType.filterType)}
+                                value={filterType.filterType}>{filterType.filterType}
+                            </option>)}
                     </select>
                 </div>
             </React.Fragment >

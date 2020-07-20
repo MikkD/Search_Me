@@ -10,7 +10,6 @@ export class WatchList extends Component {
 
 
 
-
     render() {
         const { watchListIsOpen, dispatchToggleWatchList, watchListMovies } = this.props
         console.log('WatchList.js Trigerred')
@@ -18,7 +17,7 @@ export class WatchList extends Component {
             <React.Fragment >
                 <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
                     < div className="space-wrapper">
-                        <WatchListHeader />
+                        <WatchListHeader filterWatchList={this.props.filterWatchList} />
                         {/* Start accordion */}
                         {watchListMovies.map(movie => {
                             return (

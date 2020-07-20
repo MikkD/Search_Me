@@ -60,6 +60,35 @@ export class App extends React.Component {
 
   modalIsOpen = () => this.setState({ modalVisible: !this.state.modalVisible })
 
+  filterWatchList = (filterBy) => {
+    const currentWatchListMovies = [...this.state.watchListMovies]
+    switch (filterBy) {
+      case 'Title':
+        currentWatchListMovies.sort((a, b) => a.Title > b.Title ? 1 : -1)
+        this.setState({ watchListMovies: currentWatchListMovies })
+        break
+      case 'Year':
+        currentWatchListMovies.sort((a, b) => a.Year > b.Year ? 1 : -1)
+        this.setState({ watchListMovies: currentWatchListMovies })
+        break
+      case 'Director':
+        currentWatchListMovies.sort((a, b) => a.Director > b.Director ? 1 : -1)
+        this.setState({ watchListMovies: currentWatchListMovies })
+        break
+      case 'Country':
+        currentWatchListMovies.sort((a, b) => a.Country > b.Country ? 1 : -1)
+        this.setState({ watchListMovies: currentWatchListMovies })
+        break
+      case 'Genre':
+        currentWatchListMovies.sort((a, b) => a.Genre > b.Genre ? 1 : -1)
+        this.setState({ watchListMovies: currentWatchListMovies })
+        break
+      default:
+        this.setState({ watchListMovies: currentWatchListMovies })
+    }
+  }
+
+
   render() {
     return (
       <React.Fragment>
@@ -67,6 +96,7 @@ export class App extends React.Component {
           className="App"
           ref={this.bodyRef} >
           <WatchList
+            filterWatchList={this.filterWatchList}
             watchListHandler={this.watchListHandler}
             hiddenAccordionHandler={this.hiddenAccordionHandler}
             watchListMovies={this.state.watchListMovies}
