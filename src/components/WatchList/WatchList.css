@@ -29,8 +29,18 @@
 }
 
 .watch-list-item-container>p{
-padding:20px 40px;
+    padding: 20px 15px;
+box-sizing: border-box;
 }
+.watch-list-item-container>p:first-child{
+    min-width: 30%;
+    max-width: 30%;
+}
+.watch-list-item-container>p:not(:first-child){
+    min-width: 17.5%;
+    max-width: 17.5%;
+}
+
 
 .plus-button{
     transition: ease-in 0.4s;
@@ -49,7 +59,7 @@ padding:20px 40px;
     display: flex;
     padding: 40px 40px;
     animation-duration: 1s;
-    /* animation-name:accordion; */
+    animation-name:accordion;
 }
 
 .hidden-accordion{
@@ -57,25 +67,39 @@ padding:20px 40px;
     background-color: rgb(71, 71, 71);
     max-height: 0;
     overflow: hidden;
-    transition: max-height .8s ease-out;
+    transition: all .8s ease-out;
     border-bottom: 1px solid #d83027;
     
 }
+.hidden-accordion-padding.fade-out{
+    animation-name:accordion-fade-out;
+}
+
+.hidden-accordion.clicked{
+    transition: all .8s ease-out;
+    max-height: 100%;
+    overflow: visible;
+}
+
 
 @keyframes accordion{
 0%{
     opacity: 0;
+    /* max-height: 0; */
 }
 100%{
     opacity: 1;
+    /* max-height: 100; */
 }
 }
 @keyframes accordion-fade-out{
 0%{
     opacity: 1;
+    /* max-height: 100; */
 }
 100%{
     opacity: 0;
+    /* max-height: 0; */
 }
 }
 
@@ -119,21 +143,17 @@ padding:20px 40px;
 
 
 @media only screen and (max-width: 600px){
-    .watch-list-item-container{
-        flex-direction: column;
-        /* line-height: 0px; */
-        
-    }
-
-    .watch-list-item-container>p {
-        padding: 5px 40px 0px;
-    }
-    .hidden-accordion-padding{
+.watch-list-item-container{
     flex-direction: column;
-    min-height: 650px;
-    }
-
-    /* .watch-list-filter>div{
-        display: none;
-    } */
+}
+.watch-list-item-container>p {
+    padding: 15px 20px 5px
+}
+.hidden-accordion-padding{
+flex-direction: column;
+min-height: 650px;
+}
+.watch-list-item-container>p:first-child {
+    max-width: 100%;
+}
 }

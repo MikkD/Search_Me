@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import './Modal.css';
 
 export class Modal extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            movie: this.props.movie
-        }
-    }
 
     addToWatchList = watchListItem => this.props.watchListHandler(watchListItem)
+
 
     render() {
         console.log('Modal Triggered')
@@ -38,12 +33,15 @@ export class Modal extends Component {
                                 <p><span>Director:</span> {Director}</p>
                                 <p><span>Genre:</span> {Genre}</p>
                                 <p><span>IMDB Rating</span> {imdbRating}</p>
+
                                 <p><button
                                     id={imdbID}
                                     onClick={() => this.addToWatchList(this.props.movie)}
                                     className="watchlist-button">
-                                    {isAddedToWatchList ? 'REMOVE FROM WATCHLIST' : 'ADD TO WATCHLIST'}
-                                </button></p>
+                                    {this.props.watchListMovies.some(movie => movie.imdbID === imdbID) ? 'REMOVE FROM WATCHLIST' : 'ADD TO WATCHLIST'}
+                                </button>
+                                </p>
+
                             </div>
                         </div>
                     </div>

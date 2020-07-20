@@ -35,27 +35,27 @@ export class App extends React.Component {
         const theMovie = await getDataUtil(queryParam)
         this.setState({ movie: { ...theMovie, isAddedToWatchList: false } });
         break;
-      default:
-        console.error('MOVIE NOT FOUND')
     }
   }
 
   watchListHandler = (newWatchListMovie) => {
     let currentWatchListMovies = [...this.state.watchListMovies];
     let dublicate = currentWatchListMovies.find(el => el.imdbID === newWatchListMovie.imdbID)
-    console.log('dublicate', dublicate)
     if (!dublicate) {
       this.setState({
-        watchListMovies: [...this.state.watchListMovies, newWatchListMovie],
-        movie: { ...newWatchListMovie, isAddedToWatchList: true }
+        watchListMovies: [...this.state.watchListMovies,
+        { ...newWatchListMovie, isAddedToWatchList: true, hiddenAccordionClicked: false }]
       })
     } else {
       currentWatchListMovies.splice(currentWatchListMovies.indexOf(dublicate), 1)
-      this.setState({
-        watchListMovies: currentWatchListMovies,
-        movie: { ...newWatchListMovie, isAddedToWatchList: false }
-      })
+      this.setState({ watchListMovies: currentWatchListMovies })
     }
+  }
+
+  hiddenAccordionHandler = (watchListMovieId) => {
+    const newMovies = this.state.watchListMovies.map(movie => movie.imdbID === watchListMovieId ?
+      { ...movie, hiddenAccordionClicked: !movie.hiddenAccordionClicked } : movie);
+    this.setState({ watchListMovies: newMovies })
   }
 
   modalIsOpen = () => this.setState({ modalVisible: !this.state.modalVisible })
@@ -67,6 +67,8 @@ export class App extends React.Component {
           className="App"
           ref={this.bodyRef} >
           <WatchList
+            watchListHandler={this.watchListHandler}
+            hiddenAccordionHandler={this.hiddenAccordionHandler}
             watchListMovies={this.state.watchListMovies}
           />
           <NavBar
@@ -84,6 +86,7 @@ export class App extends React.Component {
             watchListHandler={this.watchListHandler}
             modalIsOpen={this.modalIsOpen}
             modalVisible={this.state.modalVisible}
+            watchListMovies={this.state.watchListMovies}
             movie={this.state.movie} /> :
 
         </div >

@@ -3,12 +3,13 @@ import './Movies.css';
 
 export class Movies extends PureComponent {
 
-
-    handleClick = (e) => {
-
-
+    handleClick = (event) => {
+        this.props.fetchData(`?i=${event.target.id}`)
         this.props.modalIsOpen()
     }
+
+
+
     render() {
         console.log('Movies.js triggered')
         const { movies, errorHandler } = this.props;
@@ -26,9 +27,7 @@ export class Movies extends PureComponent {
                                         <p>
                                             <button
                                                 className="details-button"
-                                                // onClick={(event) => this.props.fetchData(`?i=${event.target.id}`) &&
-                                                //     this.props.modalIsOpen()}
-                                                onClick={(e) => this.handleClicks(e)}
+                                                onClick={(e) => this.handleClick(e)}
                                                 id={movie.imdbID}>Details
                                             </button>
                                         </p>

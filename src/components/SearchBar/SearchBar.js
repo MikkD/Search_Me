@@ -6,7 +6,8 @@ export class SearchBar extends PureComponent {
         super(props)
         this.state = {
             searchValue: '',
-            prevSearchValue: ''
+            prevSearchValue: '',
+
         }
     }
 
@@ -14,15 +15,20 @@ export class SearchBar extends PureComponent {
         event.preventDefault()
         if (this.state.prevSearchValue !== this.state.searchValue && this.state.searchValue) {
             this.props.fetchData(`?s=${this.state.searchValue}`)
-            this.setState({ prevSearchValue: this.state.searchValue })
+            this.setState({
+                prevSearchValue: this.state.searchValue,
+                searchValue: ''
+            })
+
         }
     }
 
     handleChange = (event) => {
-        this.setState({ searchValue: event.target.value, prevSearchValue: this.state.searchValue })
+        this.setState({
+            searchValue: event.target.value,
+            prevSearchValue: this.state.searchValue
+        })
     }
-
-
 
     render() {
         console.log('SearchBar.js Trigerred')
@@ -35,7 +41,7 @@ export class SearchBar extends PureComponent {
                             <input
                                 type="text"
                                 onChange={(e) => this.handleChange(e)}
-                                value={this.state.search}
+                                value={this.state.searchValue}
                                 id="search-input"
                                 placeholder="Enter a movie" />
                             <button
