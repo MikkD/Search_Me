@@ -25,16 +25,15 @@ export class Modal extends Component {
                                 <img src={Poster} alt="image" className="modal-image" />
                             </div>
                             <div className="modal-item modal-description">
-                                <p><span>Title:</span> {Title}</p>
-                                <p><span>Plot:</span> {Plot}</p>
-                                <p><span>Year:</span> {Year}</p>
-                                <p><span>Director:</span> {Director}</p>
-                                <p><span>Genre:</span> {Genre}</p>
-                                <p><span>IMDB Rating</span> {imdbRating}</p>
-
+                                <p><span>Title:</span>{Title}</p>
+                                <p><span>Plot:</span>{Plot}</p>
+                                <p><span>Year:</span>{Year}</p>
+                                <p><span>Director:</span>{Director}</p>
+                                <p><span>Genre:</span>{Genre}</p>
+                                <p><span>IMDB Rating</span>{imdbRating}</p>
                                 <p><button
                                     id={imdbID}
-                                    onClick={() => this.addToWatchList(this.props.movie)}
+                                    onClick={() => this.props.watchListHandler(this.props.movie)}
                                     className="watchlist-button">
                                     {this.props.watchListMovies.some(movie => movie.imdbID === imdbID) ? 'REMOVE FROM WATCHLIST' : 'ADD TO WATCHLIST'}
                                 </button>

@@ -40,20 +40,16 @@ export class Pagination extends Component {
         return (
             <React.Fragment>
                 <footer style={this.props.movies.length ? { display: 'block' } : { display: 'none' }}>
-                    <div className="pagi-wrapper">
-                        <div className="pagi-list">
-                            {this.state.paginationNumber[0] - 1 <= 0 ? null : <li><a onClick={(e) => this.prevPagination(e)} className="pagi-link-back-arrow">«</a></li>}
-                            {this.state.paginationNumber.map(paginationNumber => {
-                                return (
-                                    <li>
-                                        <a className={paginationNumber === this.state.currentlyClickedNumber ? 'active' : ''}
-                                            onClick={(e) => this.handlePagination(e)}>{paginationNumber}</a>
-                                    </li>
-                                )
-                            })}
-                            {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null : <li><a onClick={(e) => this.shiftPagination(e)}>»</a></li>}
-                        </div>
-                    </div >
+                    {/* <div className="pagi-wrapper"> */}
+                    <div className="pagi-list">
+                        {this.state.paginationNumber[0] - 1 <= 0 ? null : <a onClick={(e) => this.prevPagination(e)}>«</a>}
+                        {this.state.paginationNumber.map(paginationNumber => {
+                            return <a className={paginationNumber === this.state.currentlyClickedNumber ? 'active' : ''}
+                                onClick={(e) => this.handlePagination(e)}>{paginationNumber}</a>
+                        })}
+                        {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null : <a onClick={(e) => this.shiftPagination(e)}>»</a>}
+                    </div>
+                    {/* </div > */}
                 </footer >
             </React.Fragment >
         )

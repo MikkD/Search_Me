@@ -22,11 +22,12 @@ export class WatchListHeader extends React.Component {
     }
 
     render() {
+        const { watchListMovies } = this.props;
         console.log('WatchListHeader.js Trigerred')
         return (
             <React.Fragment>
                 <div className="watch-list-header">
-                    <div className="watch-list-header-item">Your WatchList</div>
+                    <div className="watch-list-header-item">{watchListMovies.length > 0 ? 'Your WatchList' : 'Your watchlist is empty'}</div>
                     <div
                         onClick={() => this.props.dispatchToggleWatchList()}
                         className="watch-list-header-close-button">

@@ -1,5 +1,5 @@
 .watch-list-overlay{
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     top:0px;
     right: 0px;
@@ -29,7 +29,7 @@
 }
 
 .watch-list-item-container>p{
-    padding: 20px 0px 20px 20px;
+    padding: 20px 20px;
     box-sizing: border-box;
 }
 .watch-list-item-container>p:first-child{
@@ -40,8 +40,6 @@
     min-width: 17.5%;
     max-width: 17.5%;
 }
-
-
 .plus-button{
     transition: ease-in 0.4s;
 }
@@ -57,14 +55,13 @@
 
 .hidden-accordion-padding{
     display: flex;
-    padding: 40px 40px;
+    padding: 20px 20px;
     animation-duration: 1s;
     animation-name:accordion;
 }
 
 .hidden-accordion{
     flex-wrap: wrap;
-    background-color: rgb(71, 71, 71);
     max-height: 0;
     overflow: hidden;
     transition: all .8s ease-out;
@@ -103,8 +100,6 @@
 }
 }
 
-
-
 .visible{
     display: flex;
 }
@@ -113,13 +108,14 @@
 }
 
 .flex-accordion-img{
-    flex-basis: 33%;
     min-width: 250px;
     margin-right: 2%;
 }
 
 .flex-accordion-body>p{
-    padding-bottom:1.3em;
+    padding-bottom:1em;
+    color: #d8d8d8;
+    line-height: 20px;
     
 }
 
@@ -128,13 +124,11 @@
     border: 1px solid #d83027;
     padding: 10px 7px;
     cursor: pointer;
-    
-    
+    font-size: 20px;
+    transition: 0.3s ease-in-out;
 }
 
 .off-watch-list-button:hover{
-    /* border: 1px solid #d83027; */
-    transition: ease-out 0.3s;
     border:1px solid transparent;
     background-color: whitesmoke;
     color: black;

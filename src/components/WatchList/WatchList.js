@@ -17,7 +17,9 @@ export class WatchList extends Component {
             <React.Fragment >
                 <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
                     < div className="space-wrapper">
-                        <WatchListHeader filterWatchList={this.props.filterWatchList} />
+                        <WatchListHeader
+                            watchListMovies={watchListMovies}
+                            filterWatchList={this.props.filterWatchList} />
                         {/* Start accordion */}
                         {watchListMovies.map(movie => {
                             return (
@@ -41,15 +43,16 @@ export class WatchList extends Component {
                                                     <img src={movie.Poster}></img>
                                                 </div>
                                                 <div className="flex-accordion-body flex-grow-big">
-                                                    <p><br />Synopsis:<br />{movie.Plot}</p>
-                                                    <p>Director:<br />{movie.Director}</p>
-                                                    <p>Actors:<br />{movie.Actors}</p>
-                                                    <p>Genre:<br />{movie.Genre}</p>
-                                                    <p>Duration:<br />{movie.Duration}</p>
+                                                    <p><span>Synopsis:</span><br />{movie.Plot}</p>
+                                                    <p><span>Director:</span><br />{movie.Director}</p>
+                                                    <p><span>Actors:</span><br />{movie.Actors}</p>
+                                                    <p><span>Genre:</span><br />{movie.Genre}</p>
+                                                    <p><span>Duration:</span><br />{movie.Runtime}</p>
                                                     <a
                                                         onClick={() => this.props.watchListHandler(movie)}
                                                         className="off-watch-list-button">
-                                                        Remove from Watchlist</a>
+                                                        Remove from Watchlist
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

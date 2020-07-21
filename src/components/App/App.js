@@ -27,7 +27,6 @@ export class App extends React.Component {
 
   fetchData = async (queryParam = this.state.queryParameter, clickedPage) => {
     console.log('didApiCall')
-    console.log('queryParam is ', queryParam)
     const identifier = queryParam.slice(0, 3);
     switch (identifier) {
       case '?s=':

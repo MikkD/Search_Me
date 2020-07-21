@@ -1,31 +1,19 @@
 
 footer{
-    display: block;
-    background-color:rgb(28, 28, 32);
+    background-color:black;
     padding: 30px;
     text-align: center;
+    font-size: 1.5em;
 }
 
-footer .pagi-wrapper .pagi-list li{
-    display: inline-block;
-    list-style: none;
-}
-
-footer .pagi-wrapper .pagi-list li a {
+footer .pagi-list  a {
     text-decoration: none;
     color: white;
-    border: 1px solid gray;
     padding:7px;
     cursor: pointer;
     
 }
-
-
-.pagi-list .active{
-    background-color:black;
+.active{
+    border-bottom: 3px solid crimson;
     
-}
-
-.pagi-list li a:hover:not(.active){
-    background-color: black;
 }

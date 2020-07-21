@@ -34,23 +34,21 @@ export class SearchBar extends PureComponent {
         console.log('SearchBar.js Trigerred')
         return (
             <React.Fragment>
-                <header>
-                    <div className="input-search-wrapper">
-                        <form className='input-form' onSubmit={this.handleSubmit}>
-                            <input
-                                type="text"
-                                onChange={(e) => this.handleChange(e)}
-                                value={this.state.searchValue}
-                                id="search-input"
-                                placeholder="Enter a movie" />
-                            <button
-                                onClick={this.handleSubmit}
-                                className="search-button">
-                                <span>🔍</span>
-                            </button>
-                        </form>
-                    </div>
-                </header>
+                <div className="input-search-wrapper">
+                    <form className='input-form' onSubmit={this.handleSubmit}>
+                        <input
+                            type="text"
+                            onChange={(e) => this.handleChange(e)}
+                            value={this.state.searchValue}
+                            id="search-input"
+                            placeholder="Enter a movie" />
+                        <button
+                            onClick={this.handleSubmit}
+                            className="search-button">
+                            <span>🔍</span>
+                        </button>
+                    </form>
+                </div>
             </React.Fragment >
         )
     }
