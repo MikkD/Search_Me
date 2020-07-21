@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './Pagination.css'
 
-export class Pagination extends Component {
+export class Pagination extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
@@ -39,8 +39,8 @@ export class Pagination extends Component {
         const lastPageNumber = Math.round(totalNumberOfPosters / 10)
         return (
             <React.Fragment>
-                <footer style={this.props.movies.length ? { display: 'block' } : { display: 'none' }}>
-                    {/* <div className="pagi-wrapper"> */}
+                {/* <footer style={this.props.movies.length ? { display: 'block' } : { display: 'none' }}> */}
+                {this.props.movies.length ? <footer>
                     <div className="pagi-list">
                         {this.state.paginationNumber[0] - 1 <= 0 ? null : <a onClick={(e) => this.prevPagination(e)}>«</a>}
                         {this.state.paginationNumber.map(paginationNumber => {
@@ -49,8 +49,8 @@ export class Pagination extends Component {
                         })}
                         {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null : <a onClick={(e) => this.shiftPagination(e)}>»</a>}
                     </div>
-                    {/* </div > */}
-                </footer >
+                </footer> : null}
+                {/* </footer > */}
             </React.Fragment >
         )
     }

@@ -1,17 +1,11 @@
 import React, { Component } from 'react'
 import './WatchList.css'
 import WatchListHeader from './WatchListHeader/WatchListHeader';
-import { connect } from 'react-redux';
-import { action_toggle_watch_list } from '../redux/watchlist/watchlist.action';
-
 
 export class WatchList extends Component {
 
-
-
-
     render() {
-        const { watchListIsOpen, dispatchToggleWatchList, watchListMovies } = this.props
+        const { watchListIsOpen, watchListMovies } = this.props
         console.log('WatchList.js Trigerred')
         return (
             <React.Fragment >
@@ -20,7 +14,6 @@ export class WatchList extends Component {
                         <WatchListHeader
                             watchListMovies={watchListMovies}
                             filterWatchList={this.props.filterWatchList} />
-                        {/* Start accordion */}
                         {watchListMovies.map(movie => {
                             return (
                                 <React.Fragment>
@@ -38,7 +31,8 @@ export class WatchList extends Component {
                                         <div
                                             className={movie.hiddenAccordionClicked ? "hidden-accordion clicked" : "hidden-accordion"}
                                             id={movie.imdbID}>
-                                            <div className={movie.hiddenAccordionClicked ? "hidden-accordion-padding" : "hidden-accordion-padding fade-out"}>
+                                            <div className={movie.hiddenAccordionClicked ?
+                                                "hidden-accordion-padding" : "hidden-accordion-padding fade-out"}>
                                                 < div className="flex-accordion-img">
                                                     <img src={movie.Poster}></img>
                                                 </div>
@@ -71,12 +65,4 @@ export class WatchList extends Component {
         )
     }
 }
-const mapStateToProps = state => ({
-    watchListIsOpen: state.rootWatchListReducer.watchListOpen
-})
-
-const mapDispatchToProps = dispatch => ({
-    dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(WatchList) 
+export default WatchList

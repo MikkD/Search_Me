@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './Modal.css';
 
-export class Modal extends Component {
+export class Modal extends PureComponent {
 
+    handleEsc = (event) => { if (event.keyCode === 27) { this.props.modalIsOpen() } }
+    componentDidMount() { window.addEventListener('keydown', this.handleEsc) }
+    componentWillUnmount() { window.removeEventListener('keydown', this.handleEsc) }
 
     render() {
         console.log('Modal Triggered')
         const { Poster, Title, Plot, Year, Director, Genre, imdbRating, imdbID } = this.props.movie;
         return (
             < React.Fragment >
-                <div ref={this.modalRef} className="modal-big"
+                <div className="modal-big"
                     style={this.props.modalVisible ? { display: 'block' } : { display: 'none' }}>
                     <div className="modal-container">
                         <div className="modal-header">
@@ -35,10 +38,10 @@ export class Modal extends Component {
                                     id={imdbID}
                                     onClick={() => this.props.watchListHandler(this.props.movie)}
                                     className="watchlist-button">
-                                    {this.props.watchListMovies.some(movie => movie.imdbID === imdbID) ? 'REMOVE FROM WATCHLIST' : 'ADD TO WATCHLIST'}
+                                    {this.props.watchListMovies.some(movie => movie.imdbID === imdbID) ?
+                                        'REMOVE FROM WATCHLIST' : 'ADD TO WATCHLIST'}
                                 </button>
                                 </p>
-
                             </div>
                         </div>
                     </div>

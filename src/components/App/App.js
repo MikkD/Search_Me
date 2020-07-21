@@ -16,12 +16,12 @@ export class App extends React.Component {
       movie: {},
       pageNumber: 1,
       watchListMovies: [],
+      watchListIsOpen: false,
       errorHandler: '',
       modalVisible: false,
       totalNumberOfPosters: 0,
       queryParameter: ''
     }
-    this.bodyRef = React.createRef()
   }
 
 
@@ -58,6 +58,14 @@ export class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ watchListMovies: JSON.parse(localStorage.getItem('watchlistMovies')) })
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('watchlistMovies', JSON.stringify(this.state.watchListMovies))
+  }
+
   hiddenAccordionHandler = (watchListMovieId) => {
     const newMovies = this.state.watchListMovies.map(movie => movie.imdbID === watchListMovieId ?
       { ...movie, hiddenAccordionClicked: !movie.hiddenAccordionClicked } : movie);
@@ -68,30 +76,8 @@ export class App extends React.Component {
 
   filterWatchList = (filterBy) => {
     const currentWatchListMovies = [...this.state.watchListMovies]
-    switch (filterBy) {
-      case 'Title':
-        currentWatchListMovies.sort((a, b) => a.Title > b.Title ? 1 : -1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-        break
-      case 'Year':
-        currentWatchListMovies.sort((a, b) => a.Year > b.Year ? 1 : -1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-        break
-      case 'Director':
-        currentWatchListMovies.sort((a, b) => a.Director > b.Director ? 1 : -1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-        break
-      case 'Country':
-        currentWatchListMovies.sort((a, b) => a.Country > b.Country ? 1 : -1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-        break
-      case 'Genre':
-        currentWatchListMovies.sort((a, b) => a.Genre > b.Genre ? 1 : -1)
-        this.setState({ watchListMovies: currentWatchListMovies })
-        break
-      default:
-        this.setState({ watchListMovies: currentWatchListMovies })
-    }
+    currentWatchListMovies.sort((a, b) => a[`${filterBy}`] > b[`${filterBy}`] ? 1 : -1)
+    this.setState({ watchListMovies: currentWatchListMovies })
   }
 
 
@@ -102,6 +88,7 @@ export class App extends React.Component {
           className="App"
           ref={this.bodyRef} >
           <WatchList
+            watchListIsOpen={this.state.watchListIsOpen}
             filterWatchList={this.filterWatchList}
             watchListHandler={this.watchListHandler}
             hiddenAccordionHandler={this.hiddenAccordionHandler}
@@ -129,7 +116,6 @@ export class App extends React.Component {
             modalVisible={this.state.modalVisible}
             watchListMovies={this.state.watchListMovies}
             movie={this.state.movie} />
-
         </div >
       </React.Fragment >
     )

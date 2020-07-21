@@ -13,15 +13,12 @@ class NavBar extends PureComponent {
             < React.Fragment >
                 <nav className='flex-nav'>
                     <div className='flex-nav-item'>
-                        <span className='fa-icon'>
-                            <i className="fas fa-film"></i>
-                        </span>
                         WatchMe
                 </div>
                     <button
                         onClick={() => this.props.dispatchToggleWatchList()}
                         className="watch-list-button">
-                        <i className="fas fa-list-alt"></i>
+                        <i className="fas fa-film"></i>
                         <div className='nav-counter'>{this.props.watchListMoviesNumber}</div>
                     </button>
                 </nav>

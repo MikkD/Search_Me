@@ -23,6 +23,7 @@ export class WatchListHeader extends React.Component {
 
     render() {
         const { watchListMovies } = this.props;
+        console.log('watchListMovies HEADER', watchListMovies)
         console.log('WatchListHeader.js Trigerred')
         return (
             <React.Fragment>
@@ -38,8 +39,7 @@ export class WatchListHeader extends React.Component {
                     {this.state.filterOptions.map(filterBy => {
                         return (
                             <div className={filterBy.filterType}>
-                                <a
-                                    onClick={() => this.handleFilter(filterBy.filterType)}
+                                <a onClick={() => this.handleFilter(filterBy.filterType)}
                                     className="button">{filterBy.filterType}
                                 </a>
                                 <span className={filterBy.isActive ? "arrow-filter down" : "arrow-filter"}>↑</span>

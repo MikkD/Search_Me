@@ -19,7 +19,7 @@ export class Movies extends PureComponent {
                     {movies.length ? movies.map(movie => {
                         return (
                             <div className="flex-item" key={movie.imdbID}>
-                                <img src={movie.Poster != 'N/A' ? movie.Poster : require('./fallback_image.jpg')} />
+                                <img src={movie.Poster != 'N/A' ? movie.Poster : require('../../assets/img/fallback_image.jpg')} />
                                 <div className="flex-description">
                                     <p>{movie.Title}</p>
                                     <p>{movie.Year}</p>
@@ -31,7 +31,6 @@ export class Movies extends PureComponent {
                                             </button>
                                     </p>
                                 </div>
-
                             </div>
                         )
                     }) : <h1 className="error-message">{errorHandler}</h1>}
