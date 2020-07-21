@@ -3,15 +3,13 @@ import './Modal.css';
 
 export class Modal extends Component {
 
-    addToWatchList = watchListItem => this.props.watchListHandler(watchListItem)
-
 
     render() {
         console.log('Modal Triggered')
-        const { Poster, Title, Plot, Year, Director, Genre, imdbRating, imdbID, isAddedToWatchList } = this.props.movie;
+        const { Poster, Title, Plot, Year, Director, Genre, imdbRating, imdbID } = this.props.movie;
         return (
             < React.Fragment >
-                <div className="modal-big"
+                <div ref={this.modalRef} className="modal-big"
                     style={this.props.modalVisible ? { display: 'block' } : { display: 'none' }}>
                     <div className="modal-container">
                         <div className="modal-header">

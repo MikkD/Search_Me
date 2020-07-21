@@ -1,9 +1,10 @@
 .modal-big{
     z-index: 1;
-    background-color:rgb(0, 0, 0,0.4);
+    background-color:rgb(0, 0, 0,0.7);
     margin:0 auto;
     overflow: auto;
-    position: absolute;
+    /* position: absolute; */
+    position: fixed;
     top:0;
     left:0; 
     width: 100%;
@@ -16,11 +17,11 @@
     color: whitesmoke;
     margin: 10% auto;
     border-radius: 3px;
+    overflow: hidden;
     
 }
 
 .modal-header{
-    border-radius: 3px;
     width: 100%;
     background-color:rgb(45, 45, 45);
     position: relative;
@@ -88,20 +89,16 @@ span{
 }
 
 .watchlist-button{
-    /* in case i remove border i need to use padding-left:0 */
-    /* padding-left: 0px; */
     background-color: transparent;
     color: #c7c7c7;
     transition: ease-in 0.1s;
     text-decoration: none;
-    /* border: none; */
     outline: none;
     border: 1px solid #d83027;
 }
 
 .watchlist-button:hover{
     cursor: pointer;
-    /* background-color:#1d1d1d; */
     color: white;
 
 }

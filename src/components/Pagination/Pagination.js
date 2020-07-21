@@ -5,46 +5,53 @@ export class Pagination extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            number: 1,
-            isActive: true
+            paginationNumber: [1, 2, 3, 4, 5],
+            currentlyClickedNumber: 1,
         }
-        this.handlePagination = this.handlePagination.bind(this)
-
     }
 
-    handlePagination = (event) => {
-        let pageNumber = parseInt(event.target.innerText);
-        let inputValue = document.querySelector('#search-input').value;
-        if (pageNumber > 0) {
-            this.props.getMovies(inputValue, pageNumber)
-            this.setState({ number: pageNumber, isActive: true })
-        }
-        // Handling pagi-arrows
-        if (event.target.className == 'pagi-link-back-arrow') {
-            this.props.getMovies(inputValue, this.state.number - 1)
-            this.setState({ number: this.state.number - 1, isActive: true })
-        }
-        if (event.target.className == 'pagi-link-next-arrow') {
-            this.props.getMovies(inputValue, this.state.number + 1)
-            this.setState({ number: this.state.number + 1, isActive: true })
-        }
-
+    shiftPagination = (e) => {
+        e.preventDefault()
+        this.setState(prevState => ({
+            paginationNumber: prevState.paginationNumber.map(num => num + 1),
+            currentlyClickedNumber: prevState.currentlyClickedNumber + 1
+        }))
+        this.props.fetchData(undefined, this.state.currentlyClickedNumber + 1)
     }
+    prevPagination = (e) => {
+        e.preventDefault()
+        this.props.fetchData(undefined, this.state.currentlyClickedNumber - 1)
+        this.setState(prevState => ({
+            paginationNumber: prevState.paginationNumber.map(num => num - 1),
+            currentlyClickedNumber: prevState.currentlyClickedNumber - 1
+        }))
+    }
+    handlePagination = (e) => {
+        const theNumber = parseInt(e.target.innerHTML)
+        this.props.fetchData(undefined, theNumber)
+        this.setState({ currentlyClickedNumber: theNumber })
+    }
+
 
     render() {
         console.log('Pagination.js Trigerred')
+        const { totalNumberOfPosters } = this.props;
+        const lastPageNumber = Math.round(totalNumberOfPosters / 10)
         return (
             <React.Fragment>
-                <footer style={this.props.currentMovies.length ? { display: 'block' } : { display: 'none' }}>
+                <footer style={this.props.movies.length ? { display: 'block' } : { display: 'none' }}>
                     <div className="pagi-wrapper">
-                        <div className="pagi-list" onClick={this.handlePagination.bind(this)}>
-                            <li className="pagi-list-item"><a href="#" className="pagi-link-back-arrow">«</a></li>
-                            <li className="pagi-list-item"><a href="#" className={this.state.isActive && this.state.number === 1 ? "pagi-link active" : "pagi-link"}>1</a></li>
-                            <li className="pagi-list-item"><a href="#" className={this.state.isActive && this.state.number === 2 ? "pagi-link active" : "pagi-link"}>2</a></li>
-                            <li className="pagi-list-item"><a href="#" className={this.state.isActive && this.state.number === 3 ? "pagi-link active" : "pagi-link"}>3</a></li>
-                            <li className="pagi-list-item"><a href="#" className={this.state.isActive && this.state.number === 4 ? "pagi-link active" : "pagi-link"}>4</a></li>
-                            <li className="pagi-list-item"><a href="#" className={this.state.isActive && this.state.number === 5 ? "pagi-link active" : "pagi-link"}>5</a></li>
-                            <li className="pagi-list-item"><a href="#" className="pagi-link-next-arrow">»</a></li>
+                        <div className="pagi-list">
+                            {this.state.paginationNumber[0] - 1 <= 0 ? null : <li><a onClick={(e) => this.prevPagination(e)} className="pagi-link-back-arrow">«</a></li>}
+                            {this.state.paginationNumber.map(paginationNumber => {
+                                return (
+                                    <li>
+                                        <a className={paginationNumber === this.state.currentlyClickedNumber ? 'active' : ''}
+                                            onClick={(e) => this.handlePagination(e)}>{paginationNumber}</a>
+                                    </li>
+                                )
+                            })}
+                            {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null : <li><a onClick={(e) => this.shiftPagination(e)}>»</a></li>}
                         </div>
                     </div >
                 </footer >

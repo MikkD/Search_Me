@@ -9,7 +9,7 @@ export class SearchBar extends PureComponent {
             prevSearchValue: '',
 
         }
-    }
+    };
 
     handleSubmit = (event) => {
         event.preventDefault()
@@ -21,21 +21,20 @@ export class SearchBar extends PureComponent {
             })
 
         }
-    }
+    };
 
     handleChange = (event) => {
         this.setState({
             searchValue: event.target.value,
             prevSearchValue: this.state.searchValue
         })
-    }
+    };
 
     render() {
         console.log('SearchBar.js Trigerred')
         return (
             <React.Fragment>
                 <header>
-                    <h1>IMDB Database</h1>
                     <div className="input-search-wrapper">
                         <form className='input-form' onSubmit={this.handleSubmit}>
                             <input

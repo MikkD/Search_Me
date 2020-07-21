@@ -1,9 +1,8 @@
 
 footer{
     display: block;
-    flex-shrink: 0;
     background-color:rgb(28, 28, 32);
-    padding: 20px;
+    padding: 30px;
     text-align: center;
 }
 
@@ -17,6 +16,7 @@ footer .pagi-wrapper .pagi-list li a {
     color: white;
     border: 1px solid gray;
     padding:7px;
+    cursor: pointer;
     
 }
 

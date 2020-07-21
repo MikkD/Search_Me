@@ -17,22 +17,29 @@ export class App extends React.Component {
       pageNumber: 1,
       watchListMovies: [],
       errorHandler: '',
-      modalVisible: false
+      modalVisible: false,
+      totalNumberOfPosters: 0,
+      queryParameter: ''
     }
     this.bodyRef = React.createRef()
   }
 
 
-  fetchData = async (queryParam,) => {
+  fetchData = async (queryParam = this.state.queryParameter, clickedPage) => {
     console.log('didApiCall')
-    const identifier = queryParam.slice(0, 3)
+    console.log('queryParam is ', queryParam)
+    const identifier = queryParam.slice(0, 3);
     switch (identifier) {
       case '?s=':
-        const theMovies = await getDataUtil(queryParam);
-        theMovies.Search ? this.setState({ movies: theMovies.Search }) : this.setState({ errorHandler: 'Movie not found!' })
+        const theMovies = await getDataUtil(queryParam, clickedPage);
+        theMovies.Search ? this.setState({
+          movies: theMovies.Search,
+          totalNumberOfPosters: theMovies.totalResults,
+          queryParameter: queryParam
+        }) : this.setState({ errorHandler: 'Movie not found!' })
         break;
       case '?i=':
-        const theMovie = await getDataUtil(queryParam)
+        const theMovie = await getDataUtil(queryParam, clickedPage)
         this.setState({ movie: { ...theMovie, isAddedToWatchList: false } });
         break;
     }
@@ -112,12 +119,17 @@ export class App extends React.Component {
             getMovie={this.getMovie}
             movies={this.state.movies}
             modalIsOpen={this.modalIsOpen} />
+          <Pagination
+            fetchData={this.fetchData}
+            totalNumberOfPosters={this.state.totalNumberOfPosters}
+            movies={this.state.movies}
+          />
           <Modal
             watchListHandler={this.watchListHandler}
             modalIsOpen={this.modalIsOpen}
             modalVisible={this.state.modalVisible}
             watchListMovies={this.state.watchListMovies}
-            movie={this.state.movie} /> :
+            movie={this.state.movie} />
 
         </div >
       </React.Fragment >
