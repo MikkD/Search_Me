@@ -1,7 +1,7 @@
 import React from 'react'
 import './WatchListHeader.css';
-import { connect } from 'react-redux';
-import { action_toggle_watch_list } from '../../redux/watchlist/watchlist.action';
+// import { connect } from 'react-redux';
+// import { action_toggle_watch_list } from '../../redux/watchlist/watchlist.action';
 import { filterParameters } from './utils';
 
 
@@ -30,7 +30,8 @@ export class WatchListHeader extends React.Component {
                 <div className="watch-list-header">
                     <div className="watch-list-header-item">{watchListMovies.length > 0 ? 'Your WatchList' : 'Your watchlist is empty'}</div>
                     <div
-                        onClick={() => this.props.dispatchToggleWatchList()}
+                        // onClick={() => this.props.dispatchToggleWatchList()}
+                        onClick={() => this.props.toggleWatchList()}
                         className="watch-list-header-close-button">
                         <i className="fa fa-times fa-xs" aria-hidden="true"></i>
                     </div>
@@ -38,7 +39,7 @@ export class WatchListHeader extends React.Component {
                 <div className="watch-list-filter invisible" >
                     {this.state.filterOptions.map(filterBy => {
                         return (
-                            <div className={filterBy.filterType}>
+                            <div key={filterBy.id} className={filterBy.filterType}>
                                 <a onClick={() => this.handleFilter(filterBy.filterType)}
                                     className="button">{filterBy.filterType}
                                 </a>
@@ -53,7 +54,7 @@ export class WatchListHeader extends React.Component {
                         id="filter-items">
                         <option>Category By:</option>
                         {this.state.filterOptions.map(filterType =>
-                            <option onChange={() => this.handleFilter(filterType.filterType)}
+                            <option key={filterType.id} onChange={() => this.handleFilter(filterType.filterType)}
                                 value={filterType.filterType}>{filterType.filterType}
                             </option>)}
                     </select>
@@ -63,11 +64,12 @@ export class WatchListHeader extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
-})
+// const mapDispatchToProps = dispatch => ({
+//     dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
+// })
 
-export default connect(null, mapDispatchToProps)(WatchListHeader)
+// export default connect(null, mapDispatchToProps)(WatchListHeader)
+export default WatchListHeader
 
 
 

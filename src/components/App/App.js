@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import SearchBar from '../SearchBar/SearchBar';
-import Movies from '../Movies/Movies';
-import Pagination from '../Pagination/Pagination';
-import NavBar from '../NavBar/NavBar';
-import WatchList from '../WatchList/WatchList';
+import SearchBar from '../SearchBar';
+import Movies from '../Movies';
+import Pagination from '../Pagination';
+import NavBar from '../NavBar';
+import WatchList from '../WatchList';
+import Modal from '../Modal';
 import { getDataUtil } from './utils';
-import Modal from '../Modal/Modal';
+
 
 export class App extends React.Component {
   constructor(props) {
@@ -24,6 +25,13 @@ export class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ watchListMovies: JSON.parse(localStorage.getItem('watchlistMovies')) })
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('watchlistMovies', JSON.stringify(this.state.watchListMovies))
+  }
 
   fetchData = async (queryParam = this.state.queryParameter, clickedPage) => {
     console.log('didApiCall')
@@ -58,14 +66,6 @@ export class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({ watchListMovies: JSON.parse(localStorage.getItem('watchlistMovies')) })
-  }
-
-  componentDidUpdate() {
-    localStorage.setItem('watchlistMovies', JSON.stringify(this.state.watchListMovies))
-  }
-
   hiddenAccordionHandler = (watchListMovieId) => {
     const newMovies = this.state.watchListMovies.map(movie => movie.imdbID === watchListMovieId ?
       { ...movie, hiddenAccordionClicked: !movie.hiddenAccordionClicked } : movie);
@@ -79,22 +79,24 @@ export class App extends React.Component {
     currentWatchListMovies.sort((a, b) => a[`${filterBy}`] > b[`${filterBy}`] ? 1 : -1)
     this.setState({ watchListMovies: currentWatchListMovies })
   }
+  toggleWatchList = () => {
+    this.setState({ watchListIsOpen: !this.state.watchListIsOpen })
+  }
 
 
   render() {
     return (
       <React.Fragment>
-        <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }}
-          className="App"
-          ref={this.bodyRef} >
+        <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }} className="App">
           <WatchList
             watchListIsOpen={this.state.watchListIsOpen}
+            toggleWatchList={this.toggleWatchList}
             filterWatchList={this.filterWatchList}
             watchListHandler={this.watchListHandler}
             hiddenAccordionHandler={this.hiddenAccordionHandler}
-            watchListMovies={this.state.watchListMovies}
-          />
+            watchListMovies={this.state.watchListMovies} />
           <NavBar
+            toggleWatchList={this.toggleWatchList}
             watchListMoviesNumber={this.state.watchListMovies.length} />
           <SearchBar
             fetchData={this.fetchData}
@@ -108,8 +110,7 @@ export class App extends React.Component {
           <Pagination
             fetchData={this.fetchData}
             totalNumberOfPosters={this.state.totalNumberOfPosters}
-            movies={this.state.movies}
-          />
+            movies={this.state.movies} />
           <Modal
             watchListHandler={this.watchListHandler}
             modalIsOpen={this.modalIsOpen}

@@ -12,12 +12,13 @@ export class WatchList extends Component {
                 <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
                     < div className="space-wrapper">
                         <WatchListHeader
+                            toggleWatchList={this.props.toggleWatchList}
                             watchListMovies={watchListMovies}
                             filterWatchList={this.props.filterWatchList} />
                         {watchListMovies.map(movie => {
                             return (
-                                <React.Fragment>
-                                    <div className="watch-list-body" key={movie.imdbID}>
+                                <React.Fragment key={movie.imdbID}>
+                                    <div className="watch-list-body" >
                                         <a onClick={() => this.props.hiddenAccordionHandler(movie.imdbID)}
                                             className="open-accordion" id={movie.imdbID}>
                                             <div className="watch-list-item-container">

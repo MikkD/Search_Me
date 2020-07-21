@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import './NavBar.css';
-import { connect } from 'react-redux';
-import { action_toggle_watch_list } from '../redux/watchlist/watchlist.action';
+// import { connect } from 'react-redux';
+// import { action_toggle_watch_list } from '../redux/watchlist/watchlist.action';
 
 
 
@@ -16,7 +16,8 @@ class NavBar extends PureComponent {
                         WatchMe
                 </div>
                     <button
-                        onClick={() => this.props.dispatchToggleWatchList()}
+                        // onClick={() => this.props.dispatchToggleWatchList()}
+                        onClick={() => this.props.toggleWatchList()}
                         className="watch-list-button">
                         <i className="fas fa-film"></i>
                         <div className='nav-counter'>{this.props.watchListMoviesNumber}</div>
@@ -28,11 +29,12 @@ class NavBar extends PureComponent {
 
 }
 
-const mapDispatchToProps = dispatch => ({
-    dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
-})
+// const mapDispatchToProps = dispatch => ({
+//     dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
+// })
 
-export default connect(null, mapDispatchToProps)(NavBar)
+// export default connect(null, mapDispatchToProps)(NavBar)
+export default NavBar
 
 
 
