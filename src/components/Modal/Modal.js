@@ -1,19 +1,19 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import './Modal.css';
 
-export class Modal extends PureComponent {
+export class Modal extends Component {
 
     handleEsc = (event) => { if (event.keyCode === 27) { this.props.modalIsOpen() } }
     componentDidMount() { window.addEventListener('keydown', this.handleEsc) }
     componentWillUnmount() { window.removeEventListener('keydown', this.handleEsc) }
+
 
     render() {
         console.log('Modal Triggered')
         const { Poster, Title, Plot, Year, Director, Genre, imdbRating, imdbID } = this.props.movie;
         return (
             < React.Fragment >
-                <div className="modal-big"
-                    style={this.props.modalVisible ? { display: 'block' } : { display: 'none' }}>
+                <div className="modal-big">
                     <div className="modal-container">
                         <div className="modal-header">
                             <p>{Title}</p>

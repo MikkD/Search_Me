@@ -101,22 +101,30 @@ export class App extends React.Component {
           <SearchBar
             fetchData={this.fetchData}
             getMovies={this.getMovies} />
-          <Movies
-            errorHandler={this.state.errorHandler}
-            fetchData={this.fetchData}
-            getMovie={this.getMovie}
-            movies={this.state.movies}
-            modalIsOpen={this.modalIsOpen} />
-          <Pagination
-            fetchData={this.fetchData}
-            totalNumberOfPosters={this.state.totalNumberOfPosters}
-            movies={this.state.movies} />
-          <Modal
-            watchListHandler={this.watchListHandler}
-            modalIsOpen={this.modalIsOpen}
-            modalVisible={this.state.modalVisible}
-            watchListMovies={this.state.watchListMovies}
-            movie={this.state.movie} />
+          {this.state.movies.length > 0 ?
+            <Movies
+              errorHandler={this.state.errorHandler}
+              fetchData={this.fetchData}
+              getMovie={this.getMovie}
+              movies={this.state.movies}
+              modalIsOpen={this.modalIsOpen} />
+            : <h1 className="error-message">{this.state.errorHandler}</h1>}
+
+          {this.state.movies.length > 0 ?
+            <Pagination
+              fetchData={this.fetchData}
+              totalNumberOfPosters={this.state.totalNumberOfPosters}
+              movies={this.state.movies} />
+            : null}
+
+          {this.state.modalVisible ?
+            <Modal
+              watchListHandler={this.watchListHandler}
+              modalIsOpen={this.modalIsOpen}
+              modalVisible={this.state.modalVisible}
+              watchListMovies={this.state.watchListMovies}
+              movie={this.state.movie} />
+            : null}
         </div >
       </React.Fragment >
     )

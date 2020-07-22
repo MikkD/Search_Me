@@ -11,6 +11,7 @@
 }
 
 #search-input{
+    height: 40px;
     width: 100%;
     padding: 10px 20px;
     border-style: none;
@@ -21,10 +22,9 @@
 }
 .search-button{
     position: absolute;
-    /* display: block; */
-    height: 36px;
+    height: 40px;
     width:36px;
-    top:5px;
+    top:0px;
     right:0;
     background: none;
     outline: none;

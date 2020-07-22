@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
-import './Pagination.css'
+import './Pagination.css';
+import uuid from 'react-uuid';
+
 
 export class Pagination extends PureComponent {
     constructor(props) {
@@ -10,8 +12,16 @@ export class Pagination extends PureComponent {
         }
     }
 
+    scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
     shiftPagination = (e) => {
         e.preventDefault()
+        this.scrollToTop()
         this.setState(prevState => ({
             paginationNumber: prevState.paginationNumber.map(num => num + 1),
             currentlyClickedNumber: prevState.currentlyClickedNumber + 1
@@ -20,6 +30,7 @@ export class Pagination extends PureComponent {
     }
     prevPagination = (e) => {
         e.preventDefault()
+        this.scrollToTop()
         this.props.fetchData(undefined, this.state.currentlyClickedNumber - 1)
         this.setState(prevState => ({
             paginationNumber: prevState.paginationNumber.map(num => num - 1),
@@ -27,6 +38,7 @@ export class Pagination extends PureComponent {
         }))
     }
     handlePagination = (e) => {
+        this.scrollToTop()
         const theNumber = parseInt(e.target.innerHTML)
         this.props.fetchData(undefined, theNumber)
         this.setState({ currentlyClickedNumber: theNumber })
@@ -39,18 +51,20 @@ export class Pagination extends PureComponent {
         const lastPageNumber = Math.round(totalNumberOfPosters / 10)
         return (
             <React.Fragment>
-                {/* <footer style={this.props.movies.length ? { display: 'block' } : { display: 'none' }}> */}
                 {this.props.movies.length ? <footer>
                     <div className="pagi-list">
-                        {this.state.paginationNumber[0] - 1 <= 0 ? null : <a onClick={(e) => this.prevPagination(e)}>«</a>}
+                        {this.state.paginationNumber[0] - 1 <= 0 ? null :
+                            <a onClick={(e) => this.prevPagination(e)}>«</a>}
                         {this.state.paginationNumber.map(paginationNumber => {
-                            return <a className={paginationNumber === this.state.currentlyClickedNumber ? 'active' : ''}
+                            return <a
+                                key={uuid()}
+                                className={paginationNumber === this.state.currentlyClickedNumber ? 'active' : ''}
                                 onClick={(e) => this.handlePagination(e)}>{paginationNumber}</a>
                         })}
-                        {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null : <a onClick={(e) => this.shiftPagination(e)}>»</a>}
+                        {this.state.currentlyClickedNumber + 1 > lastPageNumber ? null :
+                            <a onClick={(e) => this.shiftPagination(e)}>»</a>}
                     </div>
                 </footer> : null}
-                {/* </footer > */}
             </React.Fragment >
         )
     }

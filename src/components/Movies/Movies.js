@@ -12,11 +12,11 @@ export class Movies extends PureComponent {
 
     render() {
         console.log('Movies.js triggered')
-        const { movies, errorHandler } = this.props;
+        const { movies } = this.props;
         return (
             <React.Fragment>
                 <div className="flex-parent">
-                    {movies.length ? movies.map(movie => {
+                    {movies.map(movie => {
                         return (
                             <div className="flex-item" key={movie.imdbID}>
                                 <img src={movie.Poster != 'N/A' ? movie.Poster : require('../../assets/img/fallback_image.jpg')} />
@@ -33,7 +33,7 @@ export class Movies extends PureComponent {
                                 </div>
                             </div>
                         )
-                    }) : <h1 className="error-message">{errorHandler}</h1>}
+                    })}
                 </div>
             </React.Fragment >
         )
