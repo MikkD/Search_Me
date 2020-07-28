@@ -1,7 +1,5 @@
 import React from 'react'
 import './WatchListHeader.css';
-// import { connect } from 'react-redux';
-// import { action_toggle_watch_list } from '../../redux/watchlist/watchlist.action';
 import { filterParameters } from './utils';
 
 
@@ -23,14 +21,11 @@ export class WatchListHeader extends React.Component {
 
     render() {
         const { watchListMovies } = this.props;
-        console.log('watchListMovies HEADER', watchListMovies)
-        console.log('WatchListHeader.js Trigerred')
         return (
             <React.Fragment>
                 <div className="watch-list-header">
                     <div className="watch-list-header-item">{watchListMovies.length > 0 ? 'Your WatchList' : 'Your watchlist is empty'}</div>
                     <div
-                        // onClick={() => this.props.dispatchToggleWatchList()}
                         onClick={() => this.props.toggleWatchList()}
                         className="watch-list-header-close-button">
                         <i className="fa fa-times fa-xs" aria-hidden="true"></i>
@@ -64,11 +59,6 @@ export class WatchListHeader extends React.Component {
     }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//     dispatchToggleWatchList: () => dispatch(action_toggle_watch_list())
-// })
-
-// export default connect(null, mapDispatchToProps)(WatchListHeader)
 export default WatchListHeader
 
 

@@ -7,6 +7,6 @@ export const getDataUtil = async (queryParam, clickedPageNumber = 1) => {
     const fetchedData = await fetch(endpoint)
         .then(res => res.json())
         .then(parsedJSON => parsedJSON)
-        .catch(err => console.log('error is ', err))
+        .catch(err => err)
     return fetchedData
 }

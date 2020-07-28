@@ -26,7 +26,10 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ watchListMovies: JSON.parse(localStorage.getItem('watchlistMovies')) })
+    const storageItems = JSON.parse(localStorage.getItem('watchlistMovies'));
+    if (storageItems !== null) {
+      this.setState({ watchListMovies: JSON.parse(localStorage.getItem('watchlistMovies')) })
+    }
   }
 
   componentDidUpdate() {
@@ -34,7 +37,6 @@ export class App extends React.Component {
   }
 
   fetchData = async (queryParam = this.state.queryParameter, clickedPage) => {
-    console.log('didApiCall')
     const identifier = queryParam.slice(0, 3);
     switch (identifier) {
       case '?s=':
@@ -88,19 +90,25 @@ export class App extends React.Component {
     return (
       <React.Fragment>
         <div style={this.state.modalVisible ? { position: 'fixed' } : { position: 'relative' }} className="App">
+
           <WatchList
             watchListIsOpen={this.state.watchListIsOpen}
             toggleWatchList={this.toggleWatchList}
             filterWatchList={this.filterWatchList}
             watchListHandler={this.watchListHandler}
             hiddenAccordionHandler={this.hiddenAccordionHandler}
-            watchListMovies={this.state.watchListMovies} />
+            watchListMovies={this.state.watchListMovies}
+          />
+
           <NavBar
             toggleWatchList={this.toggleWatchList}
-            watchListMoviesNumber={this.state.watchListMovies.length} />
+            watchListMoviesNumber={this.state.watchListMovies.length}
+          />
+
           <SearchBar
             fetchData={this.fetchData}
             getMovies={this.getMovies} />
+
           {this.state.movies.length > 0 ?
             <Movies
               errorHandler={this.state.errorHandler}

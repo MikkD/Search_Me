@@ -11,7 +11,6 @@ export class Movies extends PureComponent {
 
 
     render() {
-        console.log('Movies.js triggered')
         const { movies } = this.props;
         return (
             <React.Fragment>

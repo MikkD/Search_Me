@@ -9,7 +9,6 @@ export class Modal extends Component {
 
 
     render() {
-        console.log('Modal Triggered')
         const { Poster, Title, Plot, Year, Director, Genre, imdbRating, imdbID } = this.props.movie;
         return (
             < React.Fragment >

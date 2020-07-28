@@ -31,7 +31,6 @@ export class SearchBar extends PureComponent {
     };
 
     render() {
-        console.log('SearchBar.js Trigerred')
         return (
             <React.Fragment>
                 <div className="input-search-wrapper">

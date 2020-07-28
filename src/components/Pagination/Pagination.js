@@ -46,7 +46,6 @@ export class Pagination extends PureComponent {
 
 
     render() {
-        console.log('Pagination.js Trigerred')
         const { totalNumberOfPosters } = this.props;
         const lastPageNumber = Math.round(totalNumberOfPosters / 10)
         return (

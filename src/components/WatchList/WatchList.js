@@ -5,8 +5,7 @@ import WatchListHeader from './WatchListHeader/WatchListHeader';
 export class WatchList extends Component {
 
     render() {
-        const { watchListIsOpen, watchListMovies } = this.props
-        console.log('WatchList.js Trigerred')
+        const { watchListIsOpen, watchListMovies } = this.props;
         return (
             <React.Fragment >
                 <div className={watchListIsOpen ? "watch-list-overlay slide-in" : "watch-list-overlay"}>
@@ -15,7 +14,8 @@ export class WatchList extends Component {
                             toggleWatchList={this.props.toggleWatchList}
                             watchListMovies={watchListMovies}
                             filterWatchList={this.props.filterWatchList} />
-                        {watchListMovies.map(movie => {
+
+                        {watchListMovies.length > 0 ? watchListMovies.map(movie => {
                             return (
                                 <React.Fragment key={movie.imdbID}>
                                     <div className="watch-list-body" >
@@ -55,7 +55,7 @@ export class WatchList extends Component {
                                 </React.Fragment>
                             )
                         })
-                        }
+                            : null}
                         <div className="watch-list-footer">
 
                         </div>
